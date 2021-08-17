@@ -26,5 +26,12 @@ namespace TheProyecto.Controllers
 
             return View();
         }
+
+        public ActionResult Biography()
+        {
+
+            return View();
+        }
+
     }
 }
