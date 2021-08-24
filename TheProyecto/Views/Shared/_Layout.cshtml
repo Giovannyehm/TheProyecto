@@ -24,6 +24,19 @@
                     <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
                     <li>@Html.ActionLink("Acerca de", "About", "Home")</li>
                     <li>@Html.ActionLink("Contacto", "Contact", "Home")</li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                            Opciones <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Usuario Crud", "Index", "User")</li>
+                            <li>@Html.ActionLink("Producto Crud", "Index", "Producto")</li>
+                            <li>@Html.ActionLink("Proveedor Crud", "Index", "Proveedor")</li>
+                            <li>@Html.ActionLink("UsuarioRol Crud", "Index", "UsuarioRol")</li>
+                            <li>@Html.ActionLink("Roles Crud", "Index", "Roles")</li>
+                            <li>@Html.ActionLink("Clientes Crud", "Index", "Cliente")</li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </div>
