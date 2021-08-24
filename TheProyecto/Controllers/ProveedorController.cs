@@ -107,7 +107,7 @@ namespace TheProyecto.Controllers
             {
                 using (var db = new inventario2021Entities())
                 {
-                    proveedor provider = db.proveedor.Find(editProvider.id);
+                    var provider = db.proveedor.Find(editProvider.id);
 
                     provider.nombre = editProvider.nombre;
 
