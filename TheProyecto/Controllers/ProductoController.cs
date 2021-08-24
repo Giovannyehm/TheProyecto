@@ -18,5 +18,131 @@ namespace TheProyecto.Controllers
             }
                 
         }
+
+        public static string NombreProveedor(int idProveedor)
+        {
+            using (var db = new inventario2021Entities())
+            {
+                return db.proveedor.Find(idProveedor).nombre;
+            }
+        }
+
+        public ActionResult ListarProveedores()
+        {
+            using (var db = new inventario2021Entities())
+            {
+                return PartialView(db.proveedor.ToList());
+            }
+        }
+
+        //vista crear
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        //recibir datos crear
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(producto producto)
+        {
+            if (!ModelState.IsValid)
+                return View();
+
+
+            try
+            {
+                using (var db = new inventario2021Entities())
+                {
+                    db.producto.Add(producto);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", "error" + ex);
+                return View();
+            }
+        }
+
+        public ActionResult Details(int id)
+        {
+            using (var db = new inventario2021Entities())
+            {
+                var findProduct = db.producto.Find(id);
+                return View(findProduct);
+            }
+        }
+
+        public ActionResult Delete(int id)
+        {
+            try
+            {
+                using (var db = new inventario2021Entities())
+                {
+                    var findProduct = db.producto.Find(id);
+                    db.producto.Remove(findProduct);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", "error" + ex);
+                return View();
+            }
+        }
+
+        //vista editar
+        public ActionResult Edit(int id)
+        {
+            try
+            {
+                using (var db = new inventario2021Entities())
+                {
+                    producto findProduct = db.producto.Where(a => a.id == id).FirstOrDefault();
+                    return View(findProduct);
+                }
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", "error" + ex);
+                return View();
+            }
+        }
+
+        //recibir datos editar
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(producto editProduct)
+        {
+            try
+            {
+                using (var db = new inventario2021Entities())
+                {
+                    producto product = db.producto.Find(editProduct.id);
+
+                    product.nombre = editProduct.nombre;
+
+                    product.percio_unitario = editProduct.percio_unitario;
+
+                    product.descripcion = editProduct.descripcion;
+
+                    product.cantidad = editProduct.cantidad;
+
+                    product.id_proveedor = editProduct.id_proveedor;
+
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", "error" + ex);
+                return View();
+            }
+        }
+
     }
 }
