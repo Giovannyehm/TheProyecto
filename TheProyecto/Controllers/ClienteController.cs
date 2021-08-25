@@ -14,7 +14,7 @@ namespace TheProyecto.Controllers
         {
             using (var db = new inventario2021Entities())
             {
-                return View(db.producto.ToList());
+                return View(db.cliente.ToList());
             }
         }
 

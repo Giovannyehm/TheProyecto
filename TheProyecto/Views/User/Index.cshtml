@@ -1,30 +1,27 @@
 ﻿@model IEnumerable<TheProyecto.Models.usuario>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Lista - Usuarios";
 }
 
-<h2>Index</h2>
+<h2>Lista Usuario</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Crear Nuevo", "Create")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.nombre)
+            Nombre Usuario
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.apellido)
+            Apellido Usuario
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.fecha_nacimiento)
+            Fecha Nacimiento
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.password)
+            Correo Usuario
         </th>
         <th></th>
     </tr>
@@ -45,12 +42,9 @@
                 @Html.DisplayFor(modelItem => item.email)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.password)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.id }, new { @class = "linkDelete" })
+                @Html.ActionLink("Editar", "Edit", new { id = item.id }) |
+                @Html.ActionLink("Detalles", "Details", new { id = item.id }) |
+                @Html.ActionLink("Borrar", "Delete", new { id = item.id }, new { @class = "linkDelete" })
             </td>
         </tr>
     }

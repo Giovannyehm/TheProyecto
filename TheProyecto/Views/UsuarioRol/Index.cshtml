@@ -24,10 +24,10 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.idUsuario)
+                @TheProyecto.Controllers.UsuarioRolController.NombreUsuario(item.idUsuario)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.idRol)
+                @TheProyecto.Controllers.UsuarioRolController.NombreRol(item.idRol)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
