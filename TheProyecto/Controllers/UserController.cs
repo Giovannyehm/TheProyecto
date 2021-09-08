@@ -4,11 +4,14 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using TheProyecto.Models;
+using System.Text;
+using System.Web.Security;
 
 namespace TheProyecto.Controllers
 {
     public class UserController : Controller
     {
+        [Authorize]
         // GET: User
         public ActionResult Index()
         {
@@ -37,6 +40,7 @@ namespace TheProyecto.Controllers
             {
                 using (var db = new inventario2021Entities())
                 {
+                    usuario.password = UserController.HashSHA1(usuario.password);
                     db.usuario.Add(usuario);
                     db.SaveChanges();
                     return RedirectToAction("Index");
@@ -47,6 +51,20 @@ namespace TheProyecto.Controllers
                 ModelState.AddModelError("", "error" + ex);
                 return View();
             }
+        }
+
+        public static string HashSHA1 (string value)
+        {
+            var sha1 = System.Security.Cryptography.SHA1.Create();
+            var inputBytes = Encoding.ASCII.GetBytes(value);
+            var hash = sha1.ComputeHash(inputBytes);
+
+            var sb = new StringBuilder();
+            for (var i = 0; i < hash.Length; i++)
+            {
+                sb.Append(hash[i].ToString("X2"));
+            }
+            return sb.ToString();
         }
 
         public ActionResult Details(int id)
@@ -127,9 +145,45 @@ namespace TheProyecto.Controllers
             }
         }
 
-        public ActionResult Login()
+        public ActionResult Login(string mensaje = "")
         {
+            ViewBag.Message = mensaje;
             return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Login(string User, string password)
+        {
+            try
+            {
+                string passEncrip = UserController.HashSHA1(password);
+                using (var db = new inventario2021Entities())
+                {
+                    var userLogin = db.usuario.FirstOrDefault(e => e.email == User && e.password == passEncrip);
+                    if(userLogin != null)
+                    {
+                        FormsAuthentication.SetAuthCookie(userLogin.email, true);
+                        Session[User] = userLogin;
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        return Login("Verifique sus datos");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", "error " + ex);
+                return View();
+            }
+        }
+
+        public ActionResult LogOut()
+        {
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Index", "Home");
         }
 
     }
