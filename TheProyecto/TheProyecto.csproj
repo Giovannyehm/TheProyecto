@@ -148,6 +148,7 @@
     <Compile Include="Models\compra.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Customizable.cs" />
     <Compile Include="Models\Model1.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -175,6 +176,7 @@
     <Compile Include="Models\proveedor.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Report_Cliente_Compra.cs" />
     <Compile Include="Models\roles.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -289,6 +291,8 @@
     <Content Include="Views\ProductoImagen\Edit.cshtml" />
     <Content Include="Views\ProductoImagen\ListaProducto.cshtml" />
     <Content Include="Views\User\Login.cshtml" />
+    <Content Include="Views\Producto\Customizable.cshtml" />
+    <Content Include="Views\Compra\Report_Cliente_Compra.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

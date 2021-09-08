@@ -9,6 +9,7 @@ namespace TheProyecto.Controllers
 {
     public class ProveedorController : Controller
     {
+        [Authorize]
         // GET: Proveedor
         public ActionResult Index()
         {

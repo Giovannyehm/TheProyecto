@@ -9,6 +9,7 @@ namespace TheProyecto.Controllers
 {
     public class CompraController : Controller
     {
+        [Authorize]
         // GET: Compra
         public ActionResult Index()
         {
@@ -18,6 +19,7 @@ namespace TheProyecto.Controllers
             }
         }
 
+        [Authorize]
         public static string NombreUsuario(int id_usuario)
         {
             using (var db = new inventario2021Entities())
@@ -26,6 +28,7 @@ namespace TheProyecto.Controllers
             }
         }
 
+        [Authorize]
         public ActionResult ListaUsuario()
         {
             using (var db = new inventario2021Entities())
@@ -34,6 +37,7 @@ namespace TheProyecto.Controllers
             }
         }
 
+        [Authorize]
         public static string NombreCliente(int id_cliente)
         {
             using (var db = new inventario2021Entities())
@@ -42,6 +46,7 @@ namespace TheProyecto.Controllers
             }
         }
 
+        [Authorize]
         public ActionResult ListaCliente()
         {
             using (var db = new inventario2021Entities())
@@ -50,6 +55,7 @@ namespace TheProyecto.Controllers
             }
         }
 
+        [Authorize]
         //vista crear
         public ActionResult Create()
         {
@@ -57,6 +63,7 @@ namespace TheProyecto.Controllers
         }
 
         //recibir datos crear
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(compra compra)
@@ -81,6 +88,7 @@ namespace TheProyecto.Controllers
             }
         }
 
+        [Authorize]
         public ActionResult Details(int id)
         {
             using (var db = new inventario2021Entities())
@@ -90,6 +98,7 @@ namespace TheProyecto.Controllers
             }
         }
 
+        [Authorize]
         public ActionResult Delete(int id)
         {
             try
@@ -109,6 +118,7 @@ namespace TheProyecto.Controllers
             }
         }
 
+        [Authorize]
         //vista editar
         public ActionResult Edit(int id)
         {
@@ -149,6 +159,29 @@ namespace TheProyecto.Controllers
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", "error" + ex);
+                return View();
+            }
+        }
+
+        public ActionResult Report_Cliente_Compra()
+        {
+            try
+            {
+                var db = new inventario2021Entities();
+                var query = from tabCliente in db.cliente
+                            join tabCompra in db.compra on tabCliente.id equals tabCompra.id_cliente
+                            select new Report_Cliente_Compra
+                            {
+                                nombreCliente = tabCliente.nombre,
+                                documentoCliente = tabCliente.documento,
+                                fechaCompra = tabCompra.fecha,
+                                totalCompra = tabCompra.total
+                            };
+                return View(query);
             }
             catch (Exception ex)
             {

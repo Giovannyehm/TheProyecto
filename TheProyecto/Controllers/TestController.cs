@@ -8,6 +8,7 @@ namespace TheProyecto.Controllers
 {
     public class TestController : Controller
     {
+        [Authorize]
         // GET: Test
         public ActionResult Index()
         {

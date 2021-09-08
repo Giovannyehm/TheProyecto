@@ -9,6 +9,7 @@ namespace TheProyecto.Controllers
 {
     public class ClienteController : Controller
     {
+        [Authorize]
         // GET: Cliente
         public ActionResult Index()
         {
@@ -18,12 +19,14 @@ namespace TheProyecto.Controllers
             }
         }
 
+        [Authorize]
         //vista crear
         public ActionResult Create()
         {
             return View();
         }
 
+        [Authorize]
         //recibir datos crear
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -49,6 +52,7 @@ namespace TheProyecto.Controllers
             }
         }
 
+        [Authorize]
         public ActionResult Details(int id)
         {
             using (var db = new inventario2021Entities())
@@ -58,6 +62,7 @@ namespace TheProyecto.Controllers
             }
         }
 
+        [Authorize]
         public ActionResult Delete(int id)
         {
             try
@@ -77,6 +82,7 @@ namespace TheProyecto.Controllers
             }
         }
 
+        [Authorize]
         //vista editar
         public ActionResult Edit(int id)
         {
@@ -95,6 +101,7 @@ namespace TheProyecto.Controllers
             }
         }
 
+        [Authorize]
         //recibir datos editar
         [HttpPost]
         [ValidateAntiForgeryToken]
