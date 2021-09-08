@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using TheProyecto.Models;
+using Rotativa;
 
 namespace TheProyecto.Controllers
 {
@@ -167,6 +168,11 @@ namespace TheProyecto.Controllers
                 ModelState.AddModelError("", "error" + ex);
                 return View();
             }
+        }
+
+        public ActionResult PdfReport()
+        {
+            return new ActionAsPdf("Customizable") { FileName = "customizable.pdf" };
         }
 
     }

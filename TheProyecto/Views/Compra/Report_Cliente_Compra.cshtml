@@ -1,10 +1,10 @@
-﻿@model IEnumerable <TheProyecto.Models.Report_Cliente_Compra>
+﻿@model IEnumerable<TheProyecto.Models.Report_Cliente_Compra>
 
 @{
     ViewBag.Title = "Report_Cliente_Compra";
 }
 
-<h2>Report_Cliente_Compra</h2>
+<h2>Reporte</h2>
 
 <table class="table">
     <tr>
@@ -23,3 +23,5 @@
         </tr>
     }
 </table>
+
+@Html.ActionLink("Imprimir Reporte", "PdfReport")
