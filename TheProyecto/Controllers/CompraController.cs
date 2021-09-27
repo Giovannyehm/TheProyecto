@@ -196,5 +196,6 @@ namespace TheProyecto.Controllers
             return new ActionAsPdf("Report_Cliente_Compra") { FileName = "report_cliente_compra.pdf" };
         }
 
+
     }
 }

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using TheProyecto.Models;
+
 
 namespace TheProyecto.Controllers
 {
@@ -121,6 +123,72 @@ namespace TheProyecto.Controllers
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", "error" + ex);
+                return View();
+            }
+        }
+
+        public ActionResult uploadCSV()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult uploadCSV(HttpPostedFileBase fileForm)
+        {
+            try
+            {
+                //string guardar archivo
+                string filePath = string.Empty;
+
+                //condicion saber si llego
+                if(fileForm != null)
+                {
+                    //ruta carpeta que guarda archivo
+                    string path = Server.MapPath("~/Uploads/");
+
+                    //condicion para saber si "Uploads" existe...
+                    if (!Directory.Exists(path))
+                    {
+                        Directory.CreateDirectory(path);
+                    }
+
+                    //obtener nombre archivo
+                    filePath = path + Path.GetFileName(fileForm.FileName);
+
+                    //Obtener extension archivo
+                    string extension = Path.GetExtension(fileForm.FileName);
+
+                    //guardar
+                    fileForm.SaveAs(filePath);
+
+                    string csvData = System.IO.File.ReadAllText(filePath);
+
+                    foreach (string row in csvData.Split('\n'))
+                    {
+                        if (string.IsNullOrEmpty(row))
+                        {
+                            var newProveedor = new proveedor
+                            {
+                                nombre = row.Split(';')[0],
+                                direccion = row.Split(';')[1],
+                                telefono = row.Split(';')[2],
+                                nombre_contacto = row.Split(';')[3]
+                            };
+
+                            using (var db = new inventario2021Entities())
+                            {
+                                db.proveedor.Add(newProveedor);
+                                db.SaveChanges();
+                            }
+                        }
+                    }
+                }
+
+                return View();
             }
             catch (Exception ex)
             {
