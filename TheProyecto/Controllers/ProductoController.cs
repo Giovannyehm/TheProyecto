@@ -73,6 +73,11 @@ namespace TheProyecto.Controllers
             using (var db = new inventario2021Entities())
             {
                 var findProduct = db.producto.Find(id);
+
+                //consultando tabla producto_imagen las imagenes del producto
+                var imagen = db.producto_imagen.Where(e => e.id_producto == findProduct.id).FirstOrDefault();
+                //pasando ruta a la vista
+                ViewBag.imagen = imagen.imagen;
                 return View(findProduct);
             }
         }

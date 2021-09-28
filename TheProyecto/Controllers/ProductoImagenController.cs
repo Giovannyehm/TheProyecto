@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -137,5 +138,64 @@ namespace TheProyecto.Controllers
                 return View();
             }
         }
+
+        public ActionResult CargarImagen()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CargarImagen(int id_producto, HttpPostedFileBase imagen)
+        {
+            try
+            {
+                //string guardar archivo
+                string filePath = string.Empty;
+                string nameFile = "";
+
+                //condicion saber si llego
+                if (imagen != null)
+                {
+                    //ruta carpeta que guarda archivo
+                    string path = Server.MapPath("~/Uploads/Imagenes/");
+
+                    //condicion para saber si "Uploads" existe...
+                    if (!Directory.Exists(path))
+                    {
+                        Directory.CreateDirectory(path);
+                    }
+
+                    nameFile = Path.GetFileName(imagen.FileName);
+
+                    //obtener nombre archivo
+                    filePath = path + Path.GetFileName(imagen.FileName);
+
+                    //Obtener extension archivo
+                    string extension = Path.GetExtension(imagen.FileName);
+
+                    //guardar
+                    imagen.SaveAs(filePath);
+                }
+
+                using (var db = new inventario2021Entities())
+                {
+                    var imagenProducto = new producto_imagen();
+                    imagenProducto.id_producto = id_producto;
+                    imagenProducto.imagen = "/Uploads/Imagenes/" + nameFile;
+                    db.producto_imagen.Add(imagenProducto);
+                    db.SaveChanges();
+
+                }
+
+                    return View();
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", "error" + ex);
+                return View();
+            }
+        }
+
     }
 }
